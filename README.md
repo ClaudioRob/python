@@ -1,2 +1,2 @@
 # python
-projeto-teste
+Repositório para projetos em Python
