@@ -1,0 +1,156 @@
+
+# Importando as bibliotecas
+import pandas as pd
+
+# informar ao matplotlib sobre gráficos inline
+%matplotlib inline
+
+#Criando o DataFrame
+>>> df = pd.DataFrame(data, columns=['País','Capital','População'])
+>>> df_cotacao = pd.DataFrame.from_dict(dados, orient="index")
+    df_cotacao
+
+# Criar o Dataframe com base no arquivo Excel
+# Precisamos pular as 2 primeiras linhas (skiprows) e as 16 últimas (skipfooter)
+df = pd.read_excel('1-Contas_a_Receber_Ago2019.xlsx', skiprows=1, skipfooter=11, encoding='cp1252')
+df.head()
+
+# Exibindo a estrutra
+df
+
+# Exibindo o Dataframe
+df.show()
+
+# Exibir as 5 últimas linhas do Dataframe
+df.tail(5)
+
+# Tipo de dados das colunas
+df.dtypes
+
+# Converter o campo Data de Lançamento em data
+df['Data de lançamento'] = pd.to_datetime(df['Data de lançamento'])
+
+
+# Converter Objecto em Float em Pandas
+df['a'] = df['a'].astype(float, errors = 'raise')
+
+# Vamos tentar identificar o erro no conversão da coluna Data de Lançamento
+df['Data de lançamento'].value_counts()
+
+# Verificando o tamanho do Dataframe (Linhas e Colunas)
+df.shape
+
+# Alterar o nome das colunas
+df.columns=['Hospital', 'Município', 'Complexidade', 'Caráter', 'Subgrupo Proc', 'Procedimento']
+
+# Listar Hospitais presentes nos dados
+df['Hospital'].unique()
+
+#Para ler arquivos CSV codificados em ISO
+>>> pd.read_csv('nome_do_arquivo.csv', encoding='ISO-8859-1')
+
+#Para escrever arquivos CSV
+>>> pd.to_csv('nome_do_arquivo_para_salvar.csv')
+
+Abrindo arquivos de Excel:
+>>> xlsx = pd.ExcelFile('seu_arquivo_excel.xlsx')
+>>> df = pd.read_excel(xlsx, 'Planilha 1')
+
+#Removendo linhas pelo index
+s.drop([0, 1])
+
+#Removendo colunas utilizando o argumento axis=1
+df.drop('País', axis=1)
+
+#Quantidade de linhas e colunas do DataFrame
+>>> df.shape
+
+#Descrição do Index
+>>> df.index
+
+#Colunas presentes no DataFrame
+>>> df.columns
+
+#Contagem de dados não-nulos
+>>> df.count()
+
+Criando uma nova coluna em um DataFrame:
+>>> df['Nova Coluna'] = 0
+
+#Se seu DataFrame possui 3 colunas, passe 3 novos valores em uma lista
+df.columns = ['Coluna 1', 'Coluna 2', 'Coluna 3']
+
+#Soma dos valores de um DataFrame
+>>> df.sum()
+
+#Menor valor de um DataFrame
+>>> df.min()
+
+#Maior valor
+>>> df.max()
+
+#Index do menor valor
+>>> df.idmin()
+
+#Index do maior valor
+>>> df.idmax()
+
+#Resumo estatístico do DataFrame, com quartis, mediana, etc.
+>>> df.describe()
+
+#Média dos valores
+>>> df.mean()
+
+#Mediana dos valores
+>>> df.median()
+
+#Aplicando uma função que substitui a por b
+df.apply(lambda x: x.replace('a', 'b'))
+
+#Ordenando em ordem crescente
+df.sort_values()
+
+#Ordenando em ordem decrescente
+df.sort_values(ascending=False)
+
+Operações aritméticas em Series:
+>>> s = pd.Series([1, 2, 3, 4, 5], index=['a', 'b', 'c', 'd', 'e'])
+
+#Somando todos os valores presentes na Series por 2
+>>> s.add(2)
+
+#Subtraindo 2 de todos os valores
+>>> s.sub(2)
+
+#Multiplicando todos os valores por 2
+>>> s.mul(2)
+
+#Dividindo valores por 2
+>>> s.div(2)
+
+#Filtrando o DataFrame para mostrar apenas valores pares
+df[df['População'] % 2 == 0]
+
+#Selecionando a primeira linha da coluna país
+df.loc[0, 'País']
+
+
+- Retirar caracteres especiais e acentuação
+import unidecode
+import unicodedata
+
+# texto original
+original = "É o 5º e último. Estava 30°C"
+
+# com unidecode
+processamento_1 = unidecode.unidecode(original)
+print(processamento_1) # E o 5o e ultimo. Estava 30degC
+
+# com unicodedata
+processamento_2 = unicodedata.normalize("NFD", original)
+
+print(processamento_2) # E´ o 5º e u´ltimo. Estava 30°C
+processamento_2 = processamento_2.encode("ascii", "ignore")
+print(processamento_2) # b'E o 5 e ultimo. Estava 30C'
+processamento_2 = processamento_2.decode("utf-8")
+print(processamento_2) # E o 5 e ultimo. Estava 30C
